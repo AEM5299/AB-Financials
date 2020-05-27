@@ -14,13 +14,13 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.abfinancials.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_search"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.abfinancials.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_watchlist"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
@@ -28,4 +28,11 @@
         android:name="com.example.abfinancials.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_calculator"
+        android:name="com.example.abfinancials.ui.calculator.CalculatorFragment"
+        android:label="@string/title_calculator"
+        tools:layout="@layout/calculator_fragment" />
+
 </navigation>
