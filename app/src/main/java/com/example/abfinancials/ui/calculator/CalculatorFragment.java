@@ -26,11 +26,11 @@ public class CalculatorFragment extends Fragment {
         calculatorViewModel =
                 ViewModelProviders.of(this).get(CalculatorViewModel.class);
         View root = inflater.inflate(R.layout.calculator_fragment, container, false);
-        final TextView textView = root.findViewById(R.id.text_calculator);
+//        final TextView textView = root.findViewById(R.id.text_calculator);
         calculatorViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+//                textView.setText(s);
             }
         });
         return root;
