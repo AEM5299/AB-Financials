@@ -3,19 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_stocks">
+    app:startDestination="@id/navigation_stocks">
 
     <fragment
         android:id="@+id/navigation_stocks"
-        android:name="com.example.abfinancials.ui.stocks.StockFragment"
+        android:name="com.example.abfinancials.ui.my_stocks.MyStocksFragment"
         android:label="@string/title_stocks"
-        tools:layout="@layout/fragment_stock" />
+        tools:layout="@layout/fragment_my_stocks" />
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.abfinancials.ui.home.HomeFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_stockFragment2"
+            app:destination="@id/stockFragment2"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -34,5 +40,11 @@
         android:name="com.example.abfinancials.ui.calculator.CalculatorFragment"
         android:label="@string/title_calculator"
         tools:layout="@layout/calculator_fragment" />
+    <fragment
+        android:id="@+id/stockFragment2"
+        android:name="com.example.abfinancials.ui.stock.StockFragment"
+        android:label="StockFragment" >
+        <argument android:name="symbol" />
+    </fragment>
 
 </navigation>

@@ -21,7 +21,7 @@ public class StockAdapter extends ArrayAdapter<SearchResultStock> {
     public View getView(int position, View convertView, ViewGroup parent) {
         SearchResultStock stock = getItem(position);
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.stock_row, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.stock_search_row, parent, false);
         }
         TextView tvName = convertView.findViewById(R.id.stock_name);
         tvName.setText(stock.name);

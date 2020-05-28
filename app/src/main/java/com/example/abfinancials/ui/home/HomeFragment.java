@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -75,6 +77,29 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+
+        final Fragment self = this;
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SearchResultStock selectedItem = (SearchResultStock) parent.getItemAtPosition(position);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("symbol", selectedItem.symbol);
+
+                NavHostFragment.findNavController(self).navigate(R.id.action_navigation_home_to_stockFragment2, bundle);
+
+//                StockFragment frag = new StockFragment();
+//                frag.setArguments(bundle);
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.nav_host_fragment, frag)
+//                        .addToBackStack(null)
+//                        .commit();
+            }
+        });
+
+
         return root;
     }
 }

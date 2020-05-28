@@ -1,4 +1,4 @@
-package com.example.abfinancials.ui.stocks;
+package com.example.abfinancials.ui.my_stocks;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.abfinancials.R;
 
-public class StockFragment extends Fragment {
+public class MyStocksFragment extends Fragment {
 
-    private StockViewModel stockViewModel;
+    private MyStocksViewModel myStocksViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        stockViewModel =
-                ViewModelProviders.of(this).get(StockViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_stock, container, false);
+        myStocksViewModel =
+                ViewModelProviders.of(this).get(MyStocksViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_my_stocks, container, false);
         final TextView textView = root.findViewById(R.id.text_stocks);
-        stockViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        myStocksViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

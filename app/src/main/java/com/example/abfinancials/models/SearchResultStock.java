@@ -8,9 +8,11 @@ import java.util.ArrayList;
 
 public class SearchResultStock {
     public String name;
+    public String symbol;
 
     public SearchResultStock(JSONObject stock) throws JSONException {
         this.name = stock.getString("2. name");
+        this.symbol = stock.getString("1. symbol");
     }
 
     public static ArrayList<SearchResultStock> fromJson(JSONArray jsonObjects) {
