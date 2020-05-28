@@ -37,11 +37,19 @@ public class StockFragment extends Fragment {
         View root = inflater.inflate(R.layout.stock_info, container, false);
         final TextView symbol = root.findViewById(R.id.company_symbol);
         final TextView price = root.findViewById(R.id.company_name);
+        final TextView name = root.findViewById(R.id.company_title_name);
+        final TextView volume = root.findViewById(R.id.company_value_volume);
+        final TextView high = root.findViewById(R.id.company_value_high);
+        final TextView low = root.findViewById(R.id.company_value_low);
         stockViewModel.getStock().observe(getViewLifecycleOwner(), new Observer<Stock>() {
             @Override
             public void onChanged(@Nullable Stock s) {
                 symbol.setText(s.symbol);
                 price.setText(String.format("$%.2f", s.price));
+                name.setText("Working on name...");
+                volume.setText(String.valueOf(s.volume));
+                high.setText(String.valueOf(s.high));
+                low.setText(String.valueOf(s.low));
             }
         });
 
