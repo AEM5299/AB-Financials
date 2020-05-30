@@ -1,4 +1,4 @@
-package com.example.abfinancials.ui.home;
+package com.example.abfinancials.ui.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,14 +29,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class SearchFragment extends Fragment {
+
+    // TODO: WEIRD ISSUE WITH THE SEARCH. I NEED TO CLOSE THE KEYBOARD TO SEE THE RESULTS
 
     ArrayList<SearchResultStock> items = new ArrayList<>();
     private ListView listView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        SearchViewModel searchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         listView = root.findViewById(R.id.stock_search_result);

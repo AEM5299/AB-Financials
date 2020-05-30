@@ -1,8 +1,8 @@
 package com.example.abfinancials.ui.stock;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -20,7 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.abfinancials.WatchListDatabase;
 import com.example.abfinancials.R;
+import com.example.abfinancials.dao.WatchListDao;
+import com.example.abfinancials.entities.WatchList;
 import com.example.abfinancials.models.Stock;
 
 import org.json.JSONException;
@@ -28,6 +31,13 @@ import org.json.JSONObject;
 
 public class StockFragment extends Fragment {
     private StockViewModel stockViewModel;
+    WatchListDao dao;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.dao = WatchListDatabase.getDatabase(getContext()).watchListDao();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +60,14 @@ public class StockFragment extends Fragment {
                 volume.setText(String.valueOf(s.volume));
                 high.setText(String.valueOf(s.high));
                 low.setText(String.valueOf(s.low));
+            }
+        });
+
+        // TODO: NOW YOU CAN ADD A STOCK TO YOUR WATCHLIST MORE THAN ONCE. NEEDS TO BE FIXED.
+        root.findViewById(R.id.addToWatchList).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AddToWatchListTask().execute(stockViewModel.getStock().getValue());
             }
         });
 
@@ -86,5 +104,27 @@ public class StockFragment extends Fragment {
                     }
                 });
         queue.add(jsonObjectRequest);
+    }
+
+    private class AddToWatchListTask extends AsyncTask<Stock, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Stock... stocks) {
+            try {
+                dao.insert(new WatchList(stocks[0]));
+            } catch (Exception x) {
+                return false;
+            }
+           return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean) {
+                Toast.makeText(getContext(), "Added to your watchlist", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "We couldn't add it", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

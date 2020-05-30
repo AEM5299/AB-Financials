@@ -1,31 +1,24 @@
 package com.example.abfinancials.ui.calculator;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.example.abfinancials.R;
-import com.example.abfinancials.ui.dashboard.DashboardViewModel;
 
 import java.text.DecimalFormat;
 
 public class CalculatorFragment extends Fragment {
-
-    private CalculatorViewModel calculatorViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,9 +35,11 @@ public class CalculatorFragment extends Fragment {
 
         Button calculateButton = (Button) view.findViewById(R.id.calculateButton);
 
+        // TODO: NEEDS VALIDATION. LEAVING ANY FIELD EMPTY CRASHES THE APP
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
                 double dividend_amount_result = Double.parseDouble(dividend_amount.getText().toString());
                 double franking_result = Double.parseDouble(franking.getText().toString());
                 double number_of_shares_result = Double.parseDouble(number_of_shares.getText().toString());

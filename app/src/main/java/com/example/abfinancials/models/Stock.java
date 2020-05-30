@@ -1,12 +1,29 @@
 package com.example.abfinancials.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+@Entity
 public class Stock {
+    @PrimaryKey
+    public int id;
+
+    @ColumnInfo(name = "company_name")
     public String name;
-    public String symbol, change_percent;
-    public double price, open, close, high, low, volume, change, previous_close;
+
+    @ColumnInfo(name = "symbol")
+    public String symbol;
+
+    public String change_percent;
+
+    @ColumnInfo(name = "price")
+    public double price;
+
+    public double open, high, low, volume, change, previous_close;
 
     public Stock(JSONObject obj) throws JSONException {
         if (obj.has("01. symbol")) {
