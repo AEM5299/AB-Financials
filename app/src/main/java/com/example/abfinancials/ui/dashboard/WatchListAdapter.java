@@ -1,4 +1,4 @@
-package com.example.abfinancials.ui.my_stocks;
+package com.example.abfinancials.ui.dashboard;
 
 import android.content.Context;
 import android.view.LayoutInflater;

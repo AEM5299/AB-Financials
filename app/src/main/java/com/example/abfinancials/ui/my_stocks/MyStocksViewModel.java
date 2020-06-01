@@ -4,21 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.abfinancials.entities.WatchList;
-
-import java.util.List;
-
 public class MyStocksViewModel extends ViewModel {
 
-    private MutableLiveData<List<WatchList>> mWatchList;
+    private MutableLiveData<String> mText;
 
     public MyStocksViewModel() {
-        mWatchList = new MutableLiveData<>();
+        mText = new MutableLiveData<>();
+        mText.setValue("This is mystocks fragment");
     }
 
-    public LiveData<List<WatchList>> getWatchList() { return mWatchList; }
-
-    public void setWatchList(List<WatchList> l) {
-        this.mWatchList.postValue(l);
+    public LiveData<String> getText() {
+        return mText;
     }
 }
