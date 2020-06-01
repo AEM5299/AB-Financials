@@ -1,5 +1,7 @@
 package com.example.abfinancials.ui.dashboard;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.abfinancials.R;
 import com.example.abfinancials.WatchListDatabase;
 import com.example.abfinancials.dao.WatchListDao;
@@ -26,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardFragment extends Fragment {
+
+    private static final String TAG = "DashboardFragment";
 
     private DashboardViewModel dashboardViewModel;
     WatchListDao dao;
@@ -45,7 +53,46 @@ public class DashboardFragment extends Fragment {
                 container,
                 false);
         final ArrayAdapter<WatchList> adapter = new WatchListAdapter(getContext(), adapterList);
-        ((ListView) root.findViewById(R.id.watchlist)).setAdapter(adapter);
+
+//        ((ListView) root.findViewById(R.id.watchlist)).setAdapter(adapter);
+        SwipeMenuListView swipeMenuListView = ((SwipeMenuListView) root.findViewById(R.id.watchlist));
+        swipeMenuListView.setAdapter(adapter);
+
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(
+                        getActivity().getApplicationContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(170);
+                // set a icon
+                deleteItem.setIcon(R.drawable.baseline_delete_outline_white_18dp);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+
+        swipeMenuListView.setMenuCreator(creator);
+
+        swipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+                    case 0:
+                        Log.d(TAG, "onMenuItemClick: clicked item" + index);
+                        break;
+                }
+                // false : close the menu; true : not close the menu
+                return false;
+            }
+        });
+
         dashboardViewModel.getWatchList().observe(getViewLifecycleOwner(), new Observer<List<WatchList>>() {
             @Override
             public void onChanged(List<WatchList> watchLists) {
