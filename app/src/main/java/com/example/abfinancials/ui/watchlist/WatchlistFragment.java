@@ -1,4 +1,4 @@
-package com.example.abfinancials.ui.dashboard;
+package com.example.abfinancials.ui.watchlist;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,8 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,16 +25,15 @@ import com.example.abfinancials.R;
 import com.example.abfinancials.WatchListDatabase;
 import com.example.abfinancials.dao.WatchListDao;
 import com.example.abfinancials.entities.WatchList;
-import com.example.abfinancials.models.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardFragment extends Fragment {
+public class WatchlistFragment extends Fragment {
 
     private static final String TAG = "DashboardFragment";
 
-    private DashboardViewModel dashboardViewModel;
+    private WatchlistViewModel dashboardViewModel;
     WatchListDao dao;
     List<WatchList> adapterList = new ArrayList<>();
 
@@ -48,7 +46,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
+                ViewModelProviders.of(this).get(WatchlistViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard,
                 container,
                 false);

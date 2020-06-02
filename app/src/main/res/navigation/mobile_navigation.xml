@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.abfinancials.ui.dashboard.DashboardFragment"
+        android:name="com.example.abfinancials.ui.watchlist.WatchlistFragment"
         android:label="@string/title_watchlist"
         tools:layout="@layout/fragment_dashboard" />
 
@@ -45,6 +45,17 @@
         android:name="com.example.abfinancials.ui.stock.StockFragment"
         android:label="StockFragment" >
         <argument android:name="symbol" />
+        <action
+            android:id="@+id/action_stockFragment2_to_buyFragment"
+            app:destination="@id/buyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyFragment"
+        android:name="com.example.abfinancials.ui.buy.BuyFragment"
+        android:label="BuyFragment" >
+        <argument
+            android:name="symbol"
+            app:argType="string" />
     </fragment>
 
 </navigation>

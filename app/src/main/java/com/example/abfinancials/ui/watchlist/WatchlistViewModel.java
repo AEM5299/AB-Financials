@@ -1,4 +1,4 @@
-package com.example.abfinancials.ui.dashboard;
+package com.example.abfinancials.ui.watchlist;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,11 +8,11 @@ import com.example.abfinancials.entities.WatchList;
 
 import java.util.List;
 
-public class DashboardViewModel extends ViewModel {
+public class WatchlistViewModel extends ViewModel {
 
     private MutableLiveData<List<WatchList>> mWatchList;
 
-    public DashboardViewModel() {
+    public WatchlistViewModel() {
         mWatchList = new MutableLiveData<>();
     }
 

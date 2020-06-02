@@ -2,9 +2,11 @@ package com.example.abfinancials.ui.stock;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -72,6 +75,18 @@ public class StockFragment extends Fragment {
         });
 
         getStockData(getArguments().getString("symbol", null));
+
+        final StockFragment self = this;
+        ((Button) root.findViewById(R.id.buy_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putDouble("price", stockViewModel.getStock().getValue().price);
+                bundle.putString("symbol", stockViewModel.getStock().getValue().symbol);
+
+                NavHostFragment.findNavController(self).navigate(R.id.action_stockFragment2_to_buyFragment, bundle);
+            }
+        });
 
         return root;
     }
