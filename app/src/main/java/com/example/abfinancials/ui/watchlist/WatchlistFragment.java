@@ -31,8 +31,6 @@ import java.util.List;
 
 public class WatchlistFragment extends Fragment {
 
-    private static final String TAG = "DashboardFragment";
-
     private WatchlistViewModel dashboardViewModel;
     WatchListDao dao;
     List<WatchList> adapterList = new ArrayList<>();
@@ -52,7 +50,6 @@ public class WatchlistFragment extends Fragment {
                 false);
         final ArrayAdapter<WatchList> adapter = new WatchListAdapter(getContext(), adapterList);
 
-//        ((ListView) root.findViewById(R.id.watchlist)).setAdapter(adapter);
         SwipeMenuListView swipeMenuListView = ((SwipeMenuListView) root.findViewById(R.id.watchlist));
         swipeMenuListView.setAdapter(adapter);
 
@@ -80,13 +77,17 @@ public class WatchlistFragment extends Fragment {
 
         swipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        Log.d(TAG, "onMenuItemClick: clicked item" + index);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dao.delete(adapterList.get(position));
+                            }
+                        }).start();
                         break;
                 }
-                // false : close the menu; true : not close the menu
                 return false;
             }
         });
@@ -99,23 +100,12 @@ public class WatchlistFragment extends Fragment {
             }
         });
 
-        new getWatchedStocks().execute();
+        dao.getAllLive().observe(getViewLifecycleOwner(), new Observer<List<WatchList>>() {
+            @Override
+            public void onChanged(List<WatchList> watchLists) {
+                dashboardViewModel.setWatchList(watchLists);
+            }
+        });
         return root;
-    }
-
-    private class getWatchedStocks extends AsyncTask<Void, Void, List<WatchList>> {
-
-        @Override
-        protected List<WatchList> doInBackground(Void... voids) {
-            Log.i("info", "executing");
-            List<WatchList> m = dao.getAll();
-            return m;
-        }
-
-        @Override
-        protected void onPostExecute(List<WatchList> watchLists) {
-            Log.i("info", String.format("returned %d", watchLists.size()));
-            dashboardViewModel.setWatchList(watchLists);
-        }
     }
 }
