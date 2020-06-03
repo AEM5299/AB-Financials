@@ -17,4 +17,12 @@ public class StockViewModel extends ViewModel {
     public void setStock(JSONObject stock) throws JSONException {
         mStock.setValue(new Stock(stock));
     }
+
+    // This is a limitation due to the API. It doesn't return the name of company with quote request
+    // So we need to pass the name from the search and just print it here
+    public void setName(String name) {
+        mStock.getValue().name = name;
+        mStock.postValue(mStock.getValue());
+//        mStock.notify();
+    }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,27 +51,20 @@ public class StockFragment extends Fragment {
         View root = inflater.inflate(R.layout.stock_info, container, false);
         final TextView symbol = root.findViewById(R.id.company_symbol);
         final TextView price = root.findViewById(R.id.company_name);
-        final TextView name = root.findViewById(R.id.company_title_name);
         final TextView volume = root.findViewById(R.id.company_value_volume);
         final TextView high = root.findViewById(R.id.company_value_high);
+        final TextView name = root.findViewById(R.id.company_title_name);
         final TextView low = root.findViewById(R.id.company_value_low);
         stockViewModel.getStock().observe(getViewLifecycleOwner(), new Observer<Stock>() {
             @Override
             public void onChanged(@Nullable Stock s) {
+                name.setText(s.name);
                 symbol.setText(s.symbol);
                 price.setText(String.format("$%.2f", s.price));
-                name.setText("Working on name...");
                 volume.setText(String.valueOf(s.volume));
                 high.setText(String.valueOf(s.high));
                 low.setText(String.valueOf(s.low));
-            }
-        });
-
-        // TODO: NOW YOU CAN ADD A STOCK TO YOUR WATCHLIST MORE THAN ONCE. NEEDS TO BE FIXED.
-        root.findViewById(R.id.addToWatchList).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AddToWatchListTask().execute(stockViewModel.getStock().getValue());
+                new CheckIfAddedToWatchList().execute(s.symbol);
             }
         });
 
@@ -91,6 +85,37 @@ public class StockFragment extends Fragment {
         return root;
     }
 
+    private void updateWatchlistIcon(Boolean v)
+    {
+        final ImageButton btn = getView().findViewById(R.id.addToWatchList);
+        if (!v) {
+            btn.setImageResource(R.drawable.baseline_add_black_18dp);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AddToWatchListTask().execute(stockViewModel.getStock().getValue());
+                    btn.setImageResource(android.R.drawable.btn_minus);
+                }
+            });
+        } else {
+            btn.setImageResource(android.R.drawable.btn_minus);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dao.delete(stockViewModel.getStock().getValue().symbol);
+                            btn.setImageResource(R.drawable.baseline_add_black_18dp);
+                            Toast.makeText(getContext(), "Removed from your watchlist", Toast.LENGTH_SHORT).show();
+                        }
+                    }).start();
+                }
+            });
+        }
+        btn.setVisibility(View.VISIBLE);
+    }
+
     private void getStockData(@Nullable String symbol) {
         if (symbol == null) {
             Toast.makeText(getContext(), "Something is wrong", Toast.LENGTH_LONG).show();
@@ -107,6 +132,7 @@ public class StockFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             stockViewModel.setStock(response.getJSONObject("Global Quote"));
+                            stockViewModel.setName(getArguments().getString("name", "Something"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -140,6 +166,23 @@ public class StockFragment extends Fragment {
             } else {
                 Toast.makeText(getContext(), "We couldn't add it", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private class CheckIfAddedToWatchList extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            Log.i("info", "we are here");
+            int v = dao.isExist(strings[0]);
+            Log.i("info", String.format("num: %d", v));
+            return v != 0;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            Log.i("info", "we are here2");
+            updateWatchlistIcon(aBoolean);
         }
     }
 }

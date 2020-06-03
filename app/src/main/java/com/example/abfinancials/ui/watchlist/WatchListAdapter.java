@@ -32,7 +32,7 @@ public class WatchListAdapter extends ArrayAdapter<WatchList> {
 
         TextView symbolView = convertView.findViewById(R.id.symbol_view);
 
-        symbolView.setText(w.symbol);
+        symbolView.setText(String.format("%s - %s", w.companyName, w.symbol));
 
         return convertView;
     }

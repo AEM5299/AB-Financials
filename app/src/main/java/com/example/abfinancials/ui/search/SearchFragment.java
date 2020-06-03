@@ -89,15 +89,9 @@ public class SearchFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("symbol", selectedItem.symbol);
+                bundle.putString("name", selectedItem.name);
 
                 NavHostFragment.findNavController(self).navigate(R.id.action_navigation_home_to_stockFragment2, bundle);
-
-//                StockFragment frag = new StockFragment();
-//                frag.setArguments(bundle);
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.nav_host_fragment, frag)
-//                        .addToBackStack(null)
-//                        .commit();
             }
         });
 

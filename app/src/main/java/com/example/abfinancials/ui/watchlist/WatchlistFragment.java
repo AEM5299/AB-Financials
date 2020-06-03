@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -25,6 +27,7 @@ import com.example.abfinancials.R;
 import com.example.abfinancials.WatchListDatabase;
 import com.example.abfinancials.dao.WatchListDao;
 import com.example.abfinancials.entities.WatchList;
+import com.example.abfinancials.models.SearchResultStock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,20 @@ public class WatchlistFragment extends Fragment {
 
         SwipeMenuListView swipeMenuListView = ((SwipeMenuListView) root.findViewById(R.id.watchlist));
         swipeMenuListView.setAdapter(adapter);
+
+        final WatchlistFragment self = this;
+        swipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                WatchList selectedItem = (WatchList) parent.getItemAtPosition(position);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("symbol", selectedItem.symbol);
+                bundle.putString("name", selectedItem.companyName);
+
+                NavHostFragment.findNavController(self).navigate(R.id.action_navigation_dashboard_to_stockFragment2, bundle);
+            }
+        });
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 

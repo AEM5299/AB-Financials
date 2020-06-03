@@ -27,7 +27,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.abfinancials.ui.watchlist.WatchlistFragment"
         android:label="@string/title_watchlist"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_stockFragment2"
+            app:destination="@id/stockFragment2" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"

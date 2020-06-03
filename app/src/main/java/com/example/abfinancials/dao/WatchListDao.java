@@ -24,8 +24,12 @@ public interface WatchListDao {
     @Insert
     void insert(WatchList watchList);
 
-
-
     @Delete
     void delete(WatchList item);
+
+    @Query("DELETE FROM watchlist WHERE symbol = :symbol")
+    void delete(String symbol);
+
+    @Query("SELECT COUNT(id) from watchlist WHERE symbol = :symbol")
+    int isExist(String symbol);
 }
