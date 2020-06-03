@@ -2,7 +2,6 @@ package com.example.abfinancials.ui.stock;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,15 +172,12 @@ public class StockFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            Log.i("info", "we are here");
             int v = dao.isExist(strings[0]);
-            Log.i("info", String.format("num: %d", v));
             return v != 0;
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            Log.i("info", "we are here2");
             updateWatchlistIcon(aBoolean);
         }
     }

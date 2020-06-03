@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.abfinancials.dao.WatchListDao;
 import com.example.abfinancials.entities.WatchList;
 
-@Database(entities = {WatchList.class}, version = 1)
+@Database(entities = {WatchList.class}, version = 2)
 public abstract class WatchListDatabase extends RoomDatabase {
     public abstract WatchListDao watchListDao();
 
@@ -24,7 +24,9 @@ public abstract class WatchListDatabase extends RoomDatabase {
                 context.getApplicationContext(),
                 WatchListDatabase.class,
                 "watchlist_database"
-        ).build();
+        )
+                .fallbackToDestructiveMigration()
+                .build();
         INSTANCE = instance;
         return instance;
     }
