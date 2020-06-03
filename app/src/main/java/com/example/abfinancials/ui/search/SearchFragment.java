@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
 
-    // TODO: WEIRD ISSUE WITH THE SEARCH. I NEED TO CLOSE THE KEYBOARD TO SEE THE RESULTS
-
     ArrayList<SearchResultStock> items = new ArrayList<>();
     private ListView listView;
 
@@ -62,6 +60,7 @@ public class SearchFragment extends Fragment {
                                 JSONArray results = response.optJSONArray("bestMatches");
                                 items.clear();
                                 items.addAll(SearchResultStock.fromJson(results));
+                                listView.invalidateViews();
                             }
                         }, new Response.ErrorListener() {
 
@@ -71,6 +70,7 @@ public class SearchFragment extends Fragment {
                             }
                         });
                 queue.add(jsonObjectRequest);
+                searchView.clearFocus();
                 return true;
             }
 
