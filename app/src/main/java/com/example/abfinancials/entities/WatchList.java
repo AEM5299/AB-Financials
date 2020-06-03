@@ -15,7 +15,7 @@ public class WatchList {
     @ColumnInfo(name = "company_name")
     public String companyName;
 
-    @ColumnInfo(name = "symbol")
+    @ColumnInfo(name = "symbol", index = true)
     public String symbol;
 
     @ColumnInfo(name = "latest_price")
