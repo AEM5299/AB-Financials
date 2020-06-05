@@ -2,15 +2,12 @@ package com.example.abfinancials.ui.watchlist;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +24,6 @@ import com.example.abfinancials.R;
 import com.example.abfinancials.WatchListDatabase;
 import com.example.abfinancials.dao.WatchListDao;
 import com.example.abfinancials.entities.WatchList;
-import com.example.abfinancials.models.SearchResultStock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +44,7 @@ public class WatchlistFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(WatchlistViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard,
+        View root = inflater.inflate(R.layout.fragment_watchlist,
                 container,
                 false);
         final ArrayAdapter<WatchList> adapter = new WatchListAdapter(getContext(), adapterList);
