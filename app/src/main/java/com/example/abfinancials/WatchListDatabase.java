@@ -15,6 +15,10 @@ public abstract class WatchListDatabase extends RoomDatabase {
 
     private static volatile WatchListDatabase INSTANCE = null;
 
+    /*
+    This is just to make sure we do not have 2 different database objects at the same time.
+    It will return the initialized instance, even across threads
+     */
     public static synchronized WatchListDatabase getDatabase(Context context) {
         WatchListDatabase tempInstance = INSTANCE;
         if (tempInstance != null) {

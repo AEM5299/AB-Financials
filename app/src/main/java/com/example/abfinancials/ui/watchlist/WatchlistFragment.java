@@ -105,6 +105,7 @@ public class WatchlistFragment extends Fragment {
             }
         });
 
+
         dashboardViewModel.getWatchList().observe(getViewLifecycleOwner(), new Observer<List<WatchList>>() {
             @Override
             public void onChanged(List<WatchList> watchLists) {
