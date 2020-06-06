@@ -44,12 +44,12 @@ public class WatchlistFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(WatchlistViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_watchlist,
+        final View root = inflater.inflate(R.layout.fragment_watchlist,
                 container,
                 false);
         final ArrayAdapter<WatchList> adapter = new WatchListAdapter(getContext(), adapterList);
 
-        SwipeMenuListView swipeMenuListView = ((SwipeMenuListView) root.findViewById(R.id.watchlist));
+        SwipeMenuListView swipeMenuListView = root.findViewById(R.id.watchlist);
         swipeMenuListView.setAdapter(adapter);
 
         final WatchlistFragment self = this;
@@ -110,6 +110,11 @@ public class WatchlistFragment extends Fragment {
             public void onChanged(List<WatchList> watchLists) {
                 adapter.clear();
                 adapterList.addAll(watchLists);
+                if (adapterList.size() == 0) {
+                    root.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+                } else {
+                    root.findViewById(R.id.empty).setVisibility(View.GONE);
+                }
             }
         });
 

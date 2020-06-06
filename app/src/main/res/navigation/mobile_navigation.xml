@@ -3,28 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_stocks">
+    app:startDestination="@id/navigation_watchlist">
 
     <fragment
-        android:id="@+id/navigation_stocks"
-        android:name="com.example.abfinancials.ui.my_stocks.MyStocksFragment"
-        android:label="@string/title_stocks"
-        tools:layout="@layout/fragment_my_stocks" />
-
-    <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_search"
         android:name="com.example.abfinancials.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_navigation_home_to_stockFragment2"
             app:destination="@id/stockFragment2"
-            app:popUpTo="@id/navigation_home"
+            app:popUpTo="@id/navigation_search"
             app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_watchlist"
         android:name="com.example.abfinancials.ui.watchlist.WatchlistFragment"
         android:label="@string/title_watchlist"
         tools:layout="@layout/fragment_watchlist" >
@@ -43,17 +37,6 @@
         android:name="com.example.abfinancials.ui.stock.StockFragment"
         android:label="StockFragment" >
         <argument android:name="symbol" />
-        <action
-            android:id="@+id/action_stockFragment2_to_buyFragment"
-            app:destination="@id/buyFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/buyFragment"
-        android:name="com.example.abfinancials.ui.buy.BuyFragment"
-        android:label="BuyFragment" >
-        <argument
-            android:name="symbol"
-            app:argType="string" />
     </fragment>
 
 </navigation>

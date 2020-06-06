@@ -37,11 +37,18 @@ public class SearchFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
+        final SearchView searchView = root.findViewById(R.id.search_field);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
+
         listView = root.findViewById(R.id.stock_search_result);
         StockAdapter stocksAdapter = new StockAdapter(getContext(), items);
         listView.setAdapter(stocksAdapter);
 
-        final SearchView searchView = root.findViewById(R.id.search_field);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
